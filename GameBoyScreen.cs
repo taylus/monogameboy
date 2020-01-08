@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Linq;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGameBoy
@@ -26,6 +27,14 @@ namespace MonoGameBoy
         public void PutPixels(Color[] color)
         {
             renderTarget.SetData(color);
+        }
+
+        public void PutPixels(GameBoyColorPalette palette, int[] colors)
+        {
+            //this is the method I imagine the emulator proper will use
+            //the emulator core's PPU should produce a 160x144 grid of color palette numbers
+            //which MonoGame should be able to draw at 60 fps even in a naive/unoptimized way
+            PutPixels(colors.Select(c => palette[c]).ToArray());
         }
 
         public void Draw(SpriteBatch spriteBatch, Rectangle destinationRectangle)
