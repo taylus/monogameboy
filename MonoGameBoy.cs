@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.IO;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -9,7 +10,9 @@ namespace MonoGameBoy
         private readonly GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private GameBoyScreen screen;
-        private readonly GameBoyColorPalette palette = GameBoyColorPalette.Dmg;
+        private KeyboardState previousKeyboardState;
+        private KeyboardState currentKeyboardState;
+        private GameBoyColorPalette palette = GameBoyColorPalette.Dmg;
 
         public MonoGameBoy()
         {
@@ -21,9 +24,8 @@ namespace MonoGameBoy
         protected override void Initialize()
         {
             base.Initialize();
-            screen = new GameBoyScreen(GraphicsDevice, width: 128, height: 192);
-            SetWindowSize(screen.Width * 4, screen.Height * 4);
-            screen.PutPixelsFromFile(palette, @"input\tetris_tileset_pixels.bin");
+            currentKeyboardState = previousKeyboardState = Keyboard.GetState();
+            ShowBackgroundMap();
         }
 
         private void SetWindowSize(int width, int height)
@@ -40,18 +42,73 @@ namespace MonoGameBoy
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            currentKeyboardState = Keyboard.GetState();
 
+            if (currentKeyboardState.IsKeyDown(Keys.Escape)) Exit();
+
+            if (WasJustPressed(Keys.T))
+            {
+                ShowTileSet();
+            }
+            else if (WasJustPressed(Keys.B))
+            {
+                ShowBackgroundMap();
+            }
+            else if (WasJustPressed(Keys.S) || WasJustPressed(Keys.O))
+            {
+                ShowSpriteOam();
+            }
+            else if (WasJustPressed(Keys.P))
+            {
+                ShowPalettes();
+            }
+
+            previousKeyboardState = currentKeyboardState;
             base.Update(gameTime);
+        }
+
+        private bool WasJustPressed(Keys key)
+        {
+            return currentKeyboardState.IsKeyDown(key) && !previousKeyboardState.IsKeyDown(key);
+        }
+
+        private void ShowTileSet()
+        {
+            screen = new GameBoyScreen(GraphicsDevice, width: 128, height: 192);
+            SetWindowSize(screen.Width * 4, screen.Height * 4);
+
+            string inputFile = Path.Combine("input", "tetris_tileset_pixels.bin");
+            screen.PutPixelsFromFile(palette, inputFile);
+
+            Window.Title = $"MonoGameBoy - Tiles [{inputFile}]";
+        }
+
+        private void ShowBackgroundMap()
+        {
+            screen = new GameBoyScreen(GraphicsDevice, width: 256, height: 256);
+            SetWindowSize(screen.Width * 2, screen.Height * 2);
+
+            string inputFile = Path.Combine("input", "tetris_bgmap_pixels.bin");
+            screen.PutPixelsFromFile(palette, inputFile);
+
+            Window.Title = $"MonoGameBoy - Background Map [{inputFile}]";
+        }
+
+        private void ShowSpriteOam()
+        {
+            //TODO: implement
+        }
+
+        private void ShowPalettes()
+        {
+            //TODO: implement
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            //GraphicsDevice.Clear(new Color(70, 70, 70));
-
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            screen.Draw(spriteBatch, GraphicsDevice.Viewport.Bounds);
+            var sourceRect = Window.Title.Contains("Background Map") ? new Rectangle(0, 0, 160, 144) : (Rectangle?)null;    //HACK: implement scroll registers later
+            screen.Draw(spriteBatch, GraphicsDevice.Viewport.Bounds, sourceRect);
             spriteBatch.End();
 
             base.Draw(gameTime);

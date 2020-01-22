@@ -41,9 +41,9 @@ namespace MonoGameBoy
             renderTarget.SetData(color);
         }
 
-        public void Draw(SpriteBatch spriteBatch, Rectangle destinationRectangle)
+        public void Draw(SpriteBatch spriteBatch, Rectangle destinationRectangle, Rectangle? sourceRectangle = null)
         {
-            spriteBatch.Draw(renderTarget, destinationRectangle, Color.White);
+            spriteBatch.Draw(renderTarget, destinationRectangle, sourceRectangle, Color.White);
         }
     }
 }
