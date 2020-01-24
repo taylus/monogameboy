@@ -54,9 +54,9 @@ namespace MonoGameBoy
             {
                 ShowBackgroundMap();
             }
-            else if (WasJustPressed(Keys.S) || WasJustPressed(Keys.O))
+            else if (WasJustPressed(Keys.S))
             {
-                ShowSpriteOam();
+                ShowSpriteLayer();
             }
             else if (WasJustPressed(Keys.P))
             {
@@ -94,9 +94,15 @@ namespace MonoGameBoy
             Window.Title = $"MonoGameBoy - Background Map [{inputFile}]";
         }
 
-        private void ShowSpriteOam()
+        private void ShowSpriteLayer()
         {
-            //TODO: implement
+            screen = new GameBoyScreen(GraphicsDevice, width: 160, height: 144);
+            SetWindowSize(512, 512);
+
+            string inputFile = Path.Combine("input", "tetris_sprite_pixels.bin");
+            screen.PutPixelsFromFile(palette, inputFile);
+
+            Window.Title = $"MonoGameBoy - Sprite Layer [{inputFile}]";
         }
 
         private void ShowPalettes()
