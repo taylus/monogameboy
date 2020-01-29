@@ -62,6 +62,10 @@ namespace MonoGameBoy
             {
                 ShowPalettes();
             }
+            else if (WasJustPressed(Keys.Space))
+            {
+                ShowScreen();
+            }
 
             previousKeyboardState = currentKeyboardState;
             base.Update(gameTime);
@@ -97,7 +101,7 @@ namespace MonoGameBoy
         private void ShowSpriteLayer()
         {
             screen = new GameBoyScreen(GraphicsDevice, width: 160, height: 144);
-            SetWindowSize(512, 512);
+            SetWindowSize(screen.Width * 3, screen.Height * 3);
 
             string inputFile = Path.Combine("input", "pokemon_reds_room_sprites.bin");
             screen.PutPixelsFromFile(palette, inputFile);
@@ -110,10 +114,20 @@ namespace MonoGameBoy
             //TODO: implement
         }
 
+        private void ShowScreen()
+        {
+            screen = new GameBoyScreen(GraphicsDevice, width: 160, height: 144);
+            SetWindowSize(screen.Width * 3, screen.Height * 3);
+
+            string inputFile = Path.Combine("input", "pokemon_reds_room_screen.bin");
+            screen.PutPixelsFromFile(palette, inputFile);
+
+            Window.Title = $"MonoGameBoy [{inputFile}]";
+        }
+
         protected override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            //var sourceRect = Window.Title.Contains("Background Map") ? new Rectangle(0, 0, 160, 144) : (Rectangle?)null;    //HACK: implement scroll registers later
             screen.Draw(spriteBatch, GraphicsDevice.Viewport.Bounds);
             spriteBatch.End();
 
