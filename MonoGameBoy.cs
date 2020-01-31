@@ -12,7 +12,7 @@ namespace MonoGameBoy
         private GameBoyScreen screen;
         private KeyboardState previousKeyboardState;
         private KeyboardState currentKeyboardState;
-        private GameBoyColorPalette palette = GameBoyColorPalette.Dmg;
+        private static readonly GameBoyColorPalette palette = GameBoyColorPalette.Dmg;
 
         public MonoGameBoy()
         {
@@ -25,7 +25,7 @@ namespace MonoGameBoy
         {
             base.Initialize();
             currentKeyboardState = previousKeyboardState = Keyboard.GetState();
-            ShowBackgroundMap();
+            ShowScreen();
         }
 
         private void SetWindowSize(int width, int height)
