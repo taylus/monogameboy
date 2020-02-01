@@ -15,29 +15,37 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="input\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="input\pokemon_reds_room_bgmap.bin">
+    <None Update="input\links_awakening_you_are_on_koholint_island.bgmap.bin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="input\pokemon_reds_room_screen.bin">
+    <None Update="input\links_awakening_you_are_on_koholint_island.screen.bin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="input\pokemon_reds_room_sprites.bin">
+    <None Update="input\links_awakening_you_are_on_koholint_island.sprites.bin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="input\pokemon_reds_room_tileset.bin">
+    <None Update="input\links_awakening_you_are_on_koholint_island.tileset.bin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="input\tetris_bgmap_pixels.bin">
+    <None Update="input\pokemon_reds_room.bgmap.bin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="input\tetris_sprite_pixels.bin">
+    <None Update="input\pokemon_reds_room.screen.bin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="input\tetris_tileset_pixels.bin">
+    <None Update="input\pokemon_reds_room.sprites.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="input\pokemon_reds_room.tileset.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="input\tetris_title_screen.bgmap.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="input\tetris_title_screen.sprites.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="input\tetris_title_screen.tileset.bin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

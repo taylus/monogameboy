@@ -13,6 +13,7 @@ namespace MonoGameBoy
         private KeyboardState previousKeyboardState;
         private KeyboardState currentKeyboardState;
         private static readonly GameBoyColorPalette palette = GameBoyColorPalette.Dmg;
+        private const string sceneName = "links_awakening_you_are_on_koholint_island";
 
         public MonoGameBoy()
         {
@@ -54,6 +55,10 @@ namespace MonoGameBoy
             {
                 ShowBackgroundMap();
             }
+            else if (WasJustPressed(Keys.W))
+            {
+                ShowWindowLayer();
+            }
             else if (WasJustPressed(Keys.S))
             {
                 ShowSpriteLayer();
@@ -78,33 +83,48 @@ namespace MonoGameBoy
 
         private void ShowTileSet()
         {
-            screen = new GameBoyScreen(GraphicsDevice, width: 128, height: 192);
-            SetWindowSize(screen.Width * 4, screen.Height * 4);
+            string inputFile = Path.Combine("input", sceneName + ".tileset.bin");
+            if (!File.Exists(inputFile)) return;
 
-            string inputFile = Path.Combine("input", "pokemon_reds_room_tileset.bin");
+            screen = new GameBoyScreen(GraphicsDevice, width: 128, height: 192);
             screen.PutPixelsFromFile(palette, inputFile);
+            SetWindowSize(screen.Width * 4, screen.Height * 4);
 
             Window.Title = $"MonoGameBoy - Tiles [{inputFile}]";
         }
 
         private void ShowBackgroundMap()
         {
-            screen = new GameBoyScreen(GraphicsDevice, width: 256, height: 256);
-            SetWindowSize(screen.Width * 2, screen.Height * 2);
+            string inputFile = Path.Combine("input", sceneName + ".bgmap.bin");
+            if (!File.Exists(inputFile)) return;
 
-            string inputFile = Path.Combine("input", "pokemon_reds_room_bgmap.bin");
+            screen = new GameBoyScreen(GraphicsDevice, width: 256, height: 256);
             screen.PutPixelsFromFile(palette, inputFile);
+            SetWindowSize(screen.Width * 2, screen.Height * 2);
 
             Window.Title = $"MonoGameBoy - Background Map [{inputFile}]";
         }
 
+        private void ShowWindowLayer()
+        {
+            string inputFile = Path.Combine("input", sceneName + ".window.bin");
+            if (!File.Exists(inputFile)) return;
+
+            screen = new GameBoyScreen(GraphicsDevice, width: 256, height: 256);
+            screen.PutPixelsFromFile(palette, inputFile);
+            SetWindowSize(screen.Width * 2, screen.Height * 2);
+
+            Window.Title = $"MonoGameBoy - Window Layer [{inputFile}]";
+        }
+
         private void ShowSpriteLayer()
         {
-            screen = new GameBoyScreen(GraphicsDevice, width: 160, height: 144);
-            SetWindowSize(screen.Width * 3, screen.Height * 3);
+            string inputFile = Path.Combine("input", sceneName + ".sprites.bin");
+            if (!File.Exists(inputFile)) return;
 
-            string inputFile = Path.Combine("input", "pokemon_reds_room_sprites.bin");
+            screen = new GameBoyScreen(GraphicsDevice, width: 160, height: 144);
             screen.PutPixelsFromFile(palette, inputFile);
+            SetWindowSize(screen.Width * 3, screen.Height * 3);
 
             Window.Title = $"MonoGameBoy - Sprite Layer [{inputFile}]";
         }
@@ -119,7 +139,7 @@ namespace MonoGameBoy
             screen = new GameBoyScreen(GraphicsDevice, width: 160, height: 144);
             SetWindowSize(screen.Width * 3, screen.Height * 3);
 
-            string inputFile = Path.Combine("input", "pokemon_reds_room_screen.bin");
+            string inputFile = Path.Combine("input", sceneName + ".screen.bin");
             screen.PutPixelsFromFile(palette, inputFile);
 
             Window.Title = $"MonoGameBoy [{inputFile}]";
