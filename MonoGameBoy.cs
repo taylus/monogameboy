@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MonoGameBoy
 {
-    public class MonoGameBoy : Game
+    public class MonoGameBoy : ScreenShotTakingGame
     {
         private readonly GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
@@ -70,6 +70,10 @@ namespace MonoGameBoy
             else if (WasJustPressed(Keys.Space))
             {
                 ShowScreen();
+            }
+            else if (WasJustPressed(Keys.F1))
+            {
+                SaveScreenshot(openAfterSaving: true);
             }
 
             previousKeyboardState = currentKeyboardState;
