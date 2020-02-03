@@ -13,7 +13,7 @@ namespace MonoGameBoy
         private KeyboardState previousKeyboardState;
         private KeyboardState currentKeyboardState;
         private static readonly GameBoyColorPalette palette = GameBoyColorPalette.Dmg;
-        private const string sceneName = "links_awakening_you_are_on_koholint_island";
+        private const string sceneName = "mario_land_level_1_paused";
 
         public MonoGameBoy()
         {
