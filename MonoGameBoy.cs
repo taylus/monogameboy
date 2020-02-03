@@ -13,7 +13,7 @@ namespace MonoGameBoy
         private KeyboardState previousKeyboardState;
         private KeyboardState currentKeyboardState;
         private static readonly GameBoyColorPalette palette = GameBoyColorPalette.Dmg;
-        private const string sceneName = "donkey_kong_land_2_level_1";
+        private const string sceneName = "pokemon_reds_room_start_menu";
 
         public MonoGameBoy()
         {
