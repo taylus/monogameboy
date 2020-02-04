@@ -21,7 +21,7 @@ namespace MonoGameBoy
         {
             var sceneDir = new DirectoryInfo("input");
             var files = sceneDir.GetFiles("*.bin");
-            return files.Select(f => f.Name.WithoutFileExtension()).Distinct().ToList();
+            return files.Select(f => f.Name.WithoutFileExtension()).Distinct().OrderBy(s => s).ToList();
         }
 
         private static string WithoutFileExtension(this string path) => path.Split('.')[0];
