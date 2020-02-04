@@ -55,6 +55,15 @@ namespace MonoGameBoy
 
         private static void RunGame(string sceneName)
         {
+            Console.WriteLine();
+            Console.WriteLine($"Loading scene {sceneName}...");
+            Console.WriteLine("Keys:");
+            Console.WriteLine(" [T] Display tileset");
+            Console.WriteLine(" [B] Display background map");
+            Console.WriteLine(" [W] Display window layer");
+            Console.WriteLine(" [S] Display sprite layer");
+            Console.WriteLine(" [Space] Display screen");
+            Console.WriteLine(" [Esc] Exit");
             using (var game = new MonoGameBoy(sceneName))
                 game.Run();
         }
