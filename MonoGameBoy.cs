@@ -13,10 +13,11 @@ namespace MonoGameBoy
         private KeyboardState previousKeyboardState;
         private KeyboardState currentKeyboardState;
         private static readonly GameBoyColorPalette palette = GameBoyColorPalette.Dmg;
-        private const string sceneName = "pokemon_reds_room_start_menu";
+        private readonly string sceneName;
 
-        public MonoGameBoy()
+        public MonoGameBoy(string sceneName)
         {
+            this.sceneName = sceneName;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
