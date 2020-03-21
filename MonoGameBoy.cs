@@ -10,6 +10,7 @@ namespace MonoGameBoy
         private readonly GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private GameBoyScreen screen;
+        private readonly GameBoyAudio audio = new GameBoyAudio();
         private KeyboardState previousKeyboardState;
         private KeyboardState currentKeyboardState;
         private static readonly GameBoyColorPalette palette = GameBoyColorPalette.Dmg;
@@ -26,6 +27,8 @@ namespace MonoGameBoy
             base.Initialize();
             currentKeyboardState = previousKeyboardState = Keyboard.GetState();
             ShowScreen();
+            audio.Volume = 0.25f;
+            audio.Play();
         }
 
         private void SetWindowSize(int width, int height)
@@ -68,6 +71,7 @@ namespace MonoGameBoy
             }
 
             previousKeyboardState = currentKeyboardState;
+            audio.Update();
             base.Update(gameTime);
         }
 
