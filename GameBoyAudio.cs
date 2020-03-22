@@ -35,22 +35,50 @@ namespace MonoGameBoy
         /// </remarks>
         public void Update()
         {
-            while(sound.PendingBufferCount < 3)
+            while (sound.PendingBufferCount < 3)
             {
                 Console.WriteLine("BufferNeeded");
-                FillSampleBuffer();
+                //FillSampleBufferWithMonoSawtoothWave();
+                FillSampleBufferWithMonoSquareWave();
                 SubmitSampleBuffer();
             }
         }
 
-        private void FillSampleBuffer()
+        private void FillSampleBufferWithMonoSawtoothWave()
         {
             for (int i = 0; i < sampleBuffer.Length; i += 2)
             {
-                short sample = (short)((i * 100) % short.MaxValue);
-                sampleBuffer[i] = (byte)(sample & 0xFF);
+                short sample = (short)((i * 48) % short.MaxValue);  //higher value => higher frequency sound
+                sampleBuffer[i] = (byte)sample;
                 sampleBuffer[i + 1] = (byte)(sample >> 8);
             }
+        }
+
+        private void FillSampleBufferWithMonoSquareWave(int sampleModulo = 512)
+        {
+            bool low = true;   //should the square wave output a "high" or "low" signal?
+            const short lowValue = short.MinValue / 4;
+            const short highValue = short.MaxValue / 4;
+            for (int i = 0; i < sampleBuffer.Length; i += 2)
+            {
+                if (i % sampleModulo == 0) low = !low;          //smaller sampleModulo => signals change more frequently => higher frequency sound
+                var sample = low ? lowValue : highValue;        //wider range => larger ampltiude => louder volume
+                sampleBuffer[i] = (byte)sample;
+                sampleBuffer[i + 1] = (byte)(sample >> 8);
+            }
+        }
+
+        /// <summary>
+        /// Reverse the short sample -> byte buffer transformation to view the original samples.
+        /// </summary>
+        private short[] DebugSampleBufferView()
+        {
+            var shortSampleBuffer = new short[sampleBuffer.Length / 2];
+            for (int i = 0; i < shortSampleBuffer.Length; i++)
+            {
+                shortSampleBuffer[i] = (short)(sampleBuffer[i * 2] | sampleBuffer[(i * 2) + 1] << 8);
+            }
+            return shortSampleBuffer;
         }
     }
 }
