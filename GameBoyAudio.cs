@@ -6,7 +6,7 @@ namespace MonoGameBoy
     public class GameBoyAudio
     {
         private const int bytesPerSample = 2;
-        private const int samplesPerBuffer = byte.MaxValue * 10;
+        private const int samplesPerBuffer = short.MaxValue / 4;
         private readonly int sampleRate;    //Hz, samples per second
         private readonly int channels;      //1 = mono, 2 = stereo
         private readonly DynamicSoundEffectInstance sound;
@@ -45,9 +45,11 @@ namespace MonoGameBoy
 
         private void FillSampleBuffer()
         {
-            for (int i = 0; i < sampleBuffer.Length; i++)
+            for (int i = 0; i < sampleBuffer.Length; i += 2)
             {
-                sampleBuffer[i] = (byte)(i % byte.MaxValue);  //sawtooth wave (I think)
+                short sample = (short)((i * 100) % short.MaxValue);
+                sampleBuffer[i] = (byte)(sample & 0xFF);
+                sampleBuffer[i + 1] = (byte)(sample >> 8);
             }
         }
     }

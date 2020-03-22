@@ -27,7 +27,7 @@ namespace MonoGameBoy
             base.Initialize();
             currentKeyboardState = previousKeyboardState = Keyboard.GetState();
             ShowScreen();
-            audio.Volume = 0.25f;
+            audio.Volume = 0.2f;
             audio.Play();
         }
 
